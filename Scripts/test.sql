@@ -53,6 +53,10 @@ from employee e join title t on e.dept =t.tno
 left join employee m on e.manager =m.empno 
 join department d on e.dept =d.deptNo ;
 
+
+select * from employee;
+select * from title;
+
 create or replace view vw_full_employee
 as
 select e.empno,
@@ -105,4 +109,16 @@ select * from title;
 delete from title where tno = 6;
 
 select * from department;
+delete from department where deptno = 5;
+
+select * from vw_full_employee;
+
+select empno,empname,title_no,title_name,
+manager_no,manager_name,salary,deptNo,deptName,floor 
+from vw_full_employee;
+
+select * from title;
+select * from department;
+
+delete from title where tno = 6;
 delete from department where deptno = 5;

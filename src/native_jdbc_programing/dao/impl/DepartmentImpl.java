@@ -47,7 +47,7 @@ public class DepartmentImpl implements DepartmentDao {
 		String deptName = rs.getString("deptName");
 		int floor = rs.getInt("floor");
 		return new Department(deptNo, deptName, floor);
-	}
+	}	
 
 	@Override
 	public Department selectDepartmentByNo(Department department) {

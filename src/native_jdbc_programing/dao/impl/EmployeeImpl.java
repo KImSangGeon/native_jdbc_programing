@@ -52,25 +52,26 @@ public class EmployeeImpl implements EmployeeDao {
 		int empno = rs.getInt("empno");
 		String empname = rs.getString("empname");
 		Title title = new Title(rs.getInt("title_no"));
-
-		
-			try {
-				title.settName(rs.getString("title_name"));
-			} catch (SQLException e) {}
-		
 		Employee manager = new Employee(rs.getInt("manager_no"));
-		
-			try {
-				manager.setEmpName(rs.getString("manager_name"));
-			} catch (SQLException e) {}
-		
 		int salary = rs.getInt("salary");
 		Department dept = new Department(rs.getInt("deptNo"));
 		
 			try {
-				dept.setDeptName(rs.getString("deptName"));
-				dept.setFloor(rs.getInt("floor"));
+				title.settName(rs.getString("title_name"));
 			} catch (SQLException e) {}
+			
+		
+			try {
+				manager.setEmpName(rs.getString("manager_name"));
+			} catch (SQLException e) {}
+				
+					try {
+				dept.setDeptName(rs.getString("deptName"));				
+			} catch (SQLException e) {}
+			
+			try {
+				dept.setFloor(rs.getInt("floor"));
+			}catch (SQLException e) {}
 		
 		return new Employee(empno, empname, title, manager, salary, dept);
 	}
