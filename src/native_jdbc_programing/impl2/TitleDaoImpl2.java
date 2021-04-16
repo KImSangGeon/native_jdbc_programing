@@ -11,7 +11,7 @@ import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 import native_jdbc_programing.dao.TitleDao;
 import native_jdbc_programing.dto.Title;
-import native_jdbc_programing.util.JdbcUtil;
+import native_jdbc_programing.util.JdbcConn;
 
 public class TitleDaoImpl2 implements TitleDao {
 	
@@ -27,7 +27,7 @@ public class TitleDaoImpl2 implements TitleDao {
 	@Override
 	public List<Title> selectTitleByAll() {
 		String sql = "select tno, tname from title";
-		try(Connection con = JdbcUtil.getConnection();
+		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()){
 			if(rs.next()) {
@@ -52,7 +52,7 @@ public class TitleDaoImpl2 implements TitleDao {
 	@Override
 	public Title selectTitleByNo(Title title) {
 		String sql = "select tno, tName from title where tno = ?";
-		try(Connection con = JdbcUtil.getConnection();
+		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setInt(1, title.gettNo());
 			try(ResultSet rs = pstmt.executeQuery()){
@@ -69,7 +69,7 @@ public class TitleDaoImpl2 implements TitleDao {
 	@Override
 	public int insertTitle(Title title) {
 		String sql = "insert into title values(?, ?)";
-		try(Connection con = JdbcUtil.getConnection();
+		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setInt(1, title.gettNo());
 			pstmt.setString(2, title.gettName());
@@ -85,7 +85,7 @@ public class TitleDaoImpl2 implements TitleDao {
 	@Override
 	public int updateTitle(Title title) {
 		String sql = "update title set tname = ? where tno = ?";
-		try(Connection con = JdbcUtil.getConnection();
+		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, title.gettName());
 			pstmt.setInt(2, title.gettNo());
@@ -99,7 +99,7 @@ public class TitleDaoImpl2 implements TitleDao {
 	@Override
 	public int deleteTitle(int titleNo) {
 		String sql = "delete from title where tno = ? ";
-		try(Connection con = JdbcUtil.getConnection();
+		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setInt(1, titleNo);
 			return pstmt.executeUpdate();

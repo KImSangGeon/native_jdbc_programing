@@ -11,7 +11,7 @@ import native_jdbc_programing.dao.EmployeeDao;
 import native_jdbc_programing.dto.Department;
 import native_jdbc_programing.dto.Employee;
 import native_jdbc_programing.dto.Title;
-import native_jdbc_programing.util.JdbcUtil;
+import native_jdbc_programing.util.JdbcConn;
 
 public class EmployeeImpl implements EmployeeDao {
 
@@ -30,7 +30,7 @@ public class EmployeeImpl implements EmployeeDao {
 	@Override
 	public List<Employee> selectEmployeeByAll() {
 		String sql = "select empno,empname,title_no,title_name,manager_no,manager_name,salary,deptNo,deptName,floor from vw_full_employee ";
-		try (Connection con = JdbcUtil.getConnection();
+		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
 			if (rs.next()) {
@@ -79,7 +79,7 @@ public class EmployeeImpl implements EmployeeDao {
 	@Override
 	public Employee selectEmployeeByNo(Employee employee) {
 		String sql = "select empno, empname, title as title_no, manager as manager_no, salary, dept as deptNo from employee where empno =?";
-		try (Connection con = JdbcUtil.getConnection(); 
+		try (Connection con = JdbcConn.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, employee.getEmpNo());
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -98,7 +98,7 @@ public class EmployeeImpl implements EmployeeDao {
 	@Override
 	public int insertEmployee(Employee employee) {
 		String sql = "insert into employee values(?, ?, ?, ?, ?, ?)";
-		try (Connection con = JdbcUtil.getConnection();
+		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, employee.getEmpNo());
 			pstmt.setString(2, employee.getEmpName());
@@ -117,7 +117,7 @@ public class EmployeeImpl implements EmployeeDao {
 	@Override
 	public int updateEmployee(Employee employee) {
 		String sql = "update employee set  empname = ?, title = ?, manager =?, salary = ?, dept = ?  where empno = ?";
-		try (Connection con = JdbcUtil.getConnection();
+		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, employee.getEmpName());
 			pstmt.setInt(2, employee.getTitle().gettNo());
@@ -136,7 +136,7 @@ public class EmployeeImpl implements EmployeeDao {
 	@Override
 	public int deleteEmployee(Employee employee) {
 		String sql = "delete from employee where empno = ?";
-		try (Connection con = JdbcUtil.getConnection();
+		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, employee.getEmpNo());
 			return pstmt.executeUpdate();

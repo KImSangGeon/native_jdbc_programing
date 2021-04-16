@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import native_jdbc_programing.dto.Department;
 import native_jdbc_programing.dto.Title;
-import native_jdbc_programing.util.JdbcUtil;
+import native_jdbc_programing.util.JdbcConn;
 
 public class TransactionService2 {
 	public String transAddTitleAndDepartment(Title title, Department dept) {
@@ -19,7 +19,7 @@ public class TransactionService2 {
 		String res = null;
 		
 		try {
-			con = JdbcUtil.getConnection();
+			con = JdbcConn.getConnection();
 			con.setAutoCommit(false);
 			
 			tPstmt = con.prepareCall(titlesql);
@@ -83,7 +83,7 @@ public class TransactionService2 {
 		
 		int res = 0;
 		try {
-			con = JdbcUtil.getConnection();
+			con = JdbcConn.getConnection();
 			con.setAutoCommit(false);
 			
 			System.out.println("res > " + res);
